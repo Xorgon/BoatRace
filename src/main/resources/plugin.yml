@@ -2,6 +2,7 @@ name: ${artifactId}
 version: ${version}
 main: ${main.class}
 permissions:
+depend: [NucleusBukkit]
 commands:
   boatrace:
     aliases: br

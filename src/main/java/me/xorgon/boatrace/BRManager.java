@@ -32,8 +32,9 @@ public class BRManager {
     private CourseProperties config;
 
     public BRManager(File file) {
-        checks = new ScheduledChecks();
         this.file = file;
+        load();
+        checks = new ScheduledChecks();
     }
 
     public Race readyRace(String courseName){

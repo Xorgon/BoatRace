@@ -1,6 +1,8 @@
 package me.xorgon.boatrace;
 
 import com.supaham.commons.bukkit.SimpleCommonPlugin;
+import me.xorgon.boatrace.util.CourseProperties;
+import pluginbase.config.SerializationRegistrar;
 
 import java.io.File;
 
@@ -13,6 +15,11 @@ public class BoatRacePlugin extends SimpleCommonPlugin<BoatRacePlugin> {
     private static final String COMMAND_PREFIX = "boatrace";
 
     private BRManager manager;
+
+    static {
+        SerializationRegistrar.registerClass(CourseProperties.class);
+        SerializationRegistrar.registerClass(CourseProperties.Course.class);
+    }
 
     public BoatRacePlugin() {
         super(BoatRacePlugin.class, COMMAND_PREFIX);
