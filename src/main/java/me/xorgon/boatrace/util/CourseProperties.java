@@ -1,7 +1,9 @@
 package me.xorgon.boatrace.util;
 
+import com.supaham.commons.bukkit.serializers.VectorSerializer;
 import lombok.Getter;
 import org.bukkit.util.Vector;
+import pluginbase.config.annotation.SerializeWith;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +22,7 @@ public class CourseProperties {
     public static class Course {
         private String id;
         private String world;
-        private Map<Integer, Vector> checkpoints = new HashMap<>();
+        @SerializeWith(VectorSerializer.class)
+        private List<Vector> checkpoints = new ArrayList<>();
     }
-
 }

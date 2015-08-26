@@ -15,6 +15,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,14 +51,16 @@ public class Race {
             public void run() {
                 if (racing) {
                     for (String name : players.keySet()) {
-                        for (Integer integer : course.getCheckpoints().keySet()) {
-                            if (players.get(name).getLocation().toVector().distance(course.getCheckpoints().get(integer)) > 5) {
-                                if (playerProgress.get(name) + 1 == integer) {
+                        List<Vector> checkpoints = course.getCheckpoints();
+                        for (Vector vector : checkpoints) {
+                            if (players.get(name).getLocation().toVector().distance(vector) < 5) {
+                                int index = checkpoints.indexOf(vector);
+                                if (playerProgress.get(name) + 1 == index) {
                                     playerProgress.remove(name);
-                                    if (integer + 1 == maxCheckpoints) {
+                                    if (index + 1 == maxCheckpoints) {
                                         endRace();
                                     } else {
-                                        playerProgress.put(name, integer);
+                                        playerProgress.put(name, index);
                                     }
                                 }
                             }
