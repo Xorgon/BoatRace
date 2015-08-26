@@ -34,7 +34,7 @@ public class BRManager {
     public BRManager(File file) {
         this.file = file;
         load();
-        checks = new ScheduledChecks();
+        checks = new ScheduledChecks(this);
     }
 
     public Race readyRace(String courseName){

@@ -13,11 +13,12 @@ import org.bukkit.util.Vector;
 public class ScheduledChecks {
 
     BoatRacePlugin plugin = BoatRacePlugin.getInstance();
-    BRManager manager = plugin.getManager();
+    BRManager manager ;
 
     BukkitTask checks;
 
-    public ScheduledChecks() {
+    public ScheduledChecks(BRManager manager) {
+        this.manager = manager;
         checks = Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
             @Override
             public void run() {
