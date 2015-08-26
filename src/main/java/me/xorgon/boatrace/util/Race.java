@@ -51,7 +51,7 @@ public class Race {
                 if (racing) {
                     for (String name : players.keySet()) {
                         for (Integer integer : course.getCheckpoints().keySet()) {
-                            if (players.get(name).getLocation().distance(course.getCheckpoints().get(integer)) > 5) {
+                            if (players.get(name).getLocation().toVector().distance(course.getCheckpoints().get(integer)) > 5) {
                                 if (playerProgress.get(name) + 1 == integer) {
                                     playerProgress.remove(name);
                                     if (integer + 1 == maxCheckpoints) {
@@ -91,9 +91,9 @@ public class Race {
 
     public void startRace() {
         task = Bukkit.getScheduler().runTaskTimer(BoatRacePlugin.getInstance(), testPlayers(), 0, 5);
-        Vector start = course.getCheckpoints().get(1).clone().subtract(course.getCheckpoints().get(0)).toVector().normalize();
+        Vector start = course.getCheckpoints().get(1).clone().subtract(course.getCheckpoints().get(0)).normalize();
         Vector perp = start.crossProduct(new Vector(0, 1, 0)).normalize().multiply(1);
-        Location spawnStart = course.getCheckpoints().get(0).clone().subtract(perp.clone().multiply((double) players.size() / 2.0)).add(start);
+        Location spawnStart = course.getCheckpoints().get(0).clone().subtract(perp.clone().multiply((double) players.size() / 2.0)).add(start).toLocation(Bukkit.getWorld(course.getWorld()));
         World world = spawnStart.getWorld();
 
         toStart = 3;
@@ -139,7 +139,7 @@ public class Race {
         racing = false;
         task.cancel();
         Double distance = null;
-        Location loc = course.getCheckpoints().get(course.getCheckpoints().size() - 1);
+        Location loc = course.getCheckpoints().get(course.getCheckpoints().size() - 1).toLocation(Bukkit.getWorld(course.getWorld()));
         for (Player player : players.values()) {
             if (distance == null) {
                 distance = loc.distance(player.getLocation());

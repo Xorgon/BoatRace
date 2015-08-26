@@ -1,7 +1,7 @@
 package me.xorgon.boatrace.util;
 
 import lombok.Getter;
-import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ public class CourseProperties {
     public static class Course {
         private String id;
         private String world;
-        private Map<Integer, Location> checkpoints = new HashMap<>();
+        private Map<Integer, Vector> checkpoints = new HashMap<>();
     }
 
 }
