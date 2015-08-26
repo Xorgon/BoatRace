@@ -21,7 +21,7 @@ public class ScheduledChecks {
         checks = Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
             @Override
             public void run() {
-                for (Race race : manager.getRaces()) {
+                for (Race race : manager.getRaces().values()) {
                     if (race.isStarting()) {
                         for (Player player : race.getPlayers().values()) {
                             player.getVehicle().setVelocity(new Vector(0, 0, 0));

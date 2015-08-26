@@ -24,7 +24,7 @@ import java.util.Map;
 public class Race {
 
     private Map<String, Player> players = new HashMap<>();
-    private Map<Integer, Location> checkpoints;
+    private CourseProperties.Course course;
     private int maxCheckpoints = 8;
     private Map<String, Integer> playerProgress = new HashMap<>();
 
@@ -40,8 +40,8 @@ public class Race {
 
     private static final int MAX_PLAYERS = 6;
 
-    public Race(Course course) {
-        checkpoints = course.getCheckpoints();
+    public Race(CourseProperties.Course course) {
+        this.course = course;
     }
 
     public Runnable testPlayers() {
@@ -50,8 +50,8 @@ public class Race {
             public void run() {
                 if (racing) {
                     for (String name : players.keySet()) {
-                        for (Integer integer : checkpoints.keySet()) {
-                            if (players.get(name).getLocation().distance(checkpoints.get(integer)) > 5) {
+                        for (Integer integer : course.getCheckpoints().keySet()) {
+                            if (players.get(name).getLocation().distance(course.getCheckpoints().get(integer)) > 5) {
                                 if (playerProgress.get(name) + 1 == integer) {
                                     playerProgress.remove(name);
                                     if (integer + 1 == maxCheckpoints) {
@@ -91,9 +91,9 @@ public class Race {
 
     public void startRace() {
         task = Bukkit.getScheduler().runTaskTimer(BoatRacePlugin.getInstance(), testPlayers(), 0, 5);
-        Vector start = checkpoints.get(1).clone().subtract(checkpoints.get(0)).toVector().normalize();
+        Vector start = course.getCheckpoints().get(1).clone().subtract(course.getCheckpoints().get(0)).toVector().normalize();
         Vector perp = start.crossProduct(new Vector(0, 1, 0)).normalize().multiply(1);
-        Location spawnStart = checkpoints.get(0).clone().subtract(perp.clone().multiply((double) players.size() / 2.0)).add(start);
+        Location spawnStart = course.getCheckpoints().get(0).clone().subtract(perp.clone().multiply((double) players.size() / 2.0)).add(start);
         World world = spawnStart.getWorld();
 
         toStart = 3;
@@ -139,7 +139,7 @@ public class Race {
         racing = false;
         task.cancel();
         Double distance = null;
-        Location loc = checkpoints.get(checkpoints.size() - 1);
+        Location loc = course.getCheckpoints().get(course.getCheckpoints().size() - 1);
         for (Player player : players.values()) {
             if (distance == null) {
                 distance = loc.distance(player.getLocation());

@@ -22,7 +22,7 @@ public class BoatRacePlugin extends SimpleCommonPlugin<BoatRacePlugin> {
     public void onEnable() {
         super.onEnable();
         instance = this;
-        manager = new BRManager();
+        manager = new BRManager(new File(getDataFolder(), "courses.yml"));
         registerEvents(new BRListener());
         getCommand("boatrace").setExecutor(new BRCommand());
     }

@@ -4,3 +4,4 @@ main: ${main.class}
 permissions:
 commands:
   boatrace:
+    aliases: br

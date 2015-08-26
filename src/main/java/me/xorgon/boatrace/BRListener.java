@@ -17,7 +17,7 @@ public class BRListener implements Listener {
 
     @EventHandler
     public void onDismount(EntityDismountEvent event) {
-        for (Race race : manager.getRaces()) {
+        for (Race race : manager.getRaces().values()) {
             if (race.isRacing() || race.isStarting()) {
                 for (Player player : race.getPlayers().values()) {
                     if (event.getEntity().equals(player)) {
